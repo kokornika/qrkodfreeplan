@@ -14,16 +14,14 @@ const blogPosts = [
   },
   {
     id: 1,
-    slug: '1',
     title: 'A digitális névjegykártyák 5 előnye a hagyományos névjegyekkel szemben',
-    excerpt: 'Részletes útmutató a digitális névjegykártyák hatékony használatához, gyakorlati tippekkel és valós példákkal. Ismerje meg a modern kapcsolatépítés titkait!',
+    excerpt: 'Fedezze fel, hogyan teheti hatékonyabbá kapcsolatépítését modern digitális névjegykártyákkal. Környezetbarát, költséghatékony és professzionális megoldás üzleti kapcsolataihoz.',
     icon: CreditCard,
-    readTime: '20 perc',
+    readTime: '5 perc',
     keywords: ['digitális névjegykártya', 'online névjegy', 'elektronikus névjegy', 'környezetbarát névjegy']
   },
   {
     id: 2,
-    slug: '2',
     title: 'QR kódok a modern üzleti életben: Több mint csak egy vonalkód',
     excerpt: 'Ismerje meg a QR kódok sokoldalú felhasználási lehetőségeit és azok üzleti előnyeit. Hatékony megoldások kapcsolatépítésre és információmegosztásra.',
     icon: QrCode,
@@ -32,7 +30,6 @@ const blogPosts = [
   },
   {
     id: 3,
-    slug: '3',
     title: 'A névjegykészítés jövője: Trendek és innovációk',
     excerpt: 'Pillantson be a névjegykészítés jövőjébe, ahol a digitális és fizikai világ találkozik. Innovatív megoldások a modern üzleti kapcsolatépítéshez.',
     icon: Smartphone,
@@ -41,7 +38,6 @@ const blogPosts = [
   },
   {
     id: 4,
-    slug: '4',
     title: 'Praktikus tippek a digitális névjegyek hatékony használatához',
     excerpt: 'Gyakorlati tanácsok és trükkök, amelyekkel maximalizálhatja digitális névjegye hatékonyságát. Professzionális megjelenés és egyszerű kezelhetőség.',
     icon: Share2,

@@ -1,5 +1,6 @@
 import emailjs from 'emailjs-com';
 import { VCardFormData } from '../../types/vcard';
+import { generateOrderSummary } from '../website/order-summary';
 
 export class EmailService {
   private serviceId: string;
@@ -38,37 +39,56 @@ export class EmailService {
     }
   }
 
-  async sendTrialWelcomeEmail(email: string, name: string): Promise<void> {
+  async sendCustomerEmail(
+    data: VCardFormData,
+    plan: { name: string; price: number; period: string },
+    deployUrl: string,
+    orderId: string
+  ): Promise<void> {
+    if (!data.email) {
+      throw new Error('Customer email is required');
+    }
+
     const templateParams = {
-      to_name: name,
-      to_email: email,
-      trial_days: 14,
-      trial_end_date: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toLocaleDateString('hu-HU')
+      to_name: data.name,
+      to_email: data.email,
+      customer_name: data.name,
+      plan_name: plan.name,
+      plan_price: `${plan.price.toLocaleString()} Ft`,
+      plan_period: plan.period,
+      order_id: orderId,
+      deploy_url: deployUrl
     };
 
-    await this.sendEmail('template_trial_welcome', templateParams);
+    await this.sendEmail('template_email_ugyfelnek', templateParams);
   }
 
-  async sendTrialEndingEmail(email: string, name: string, daysLeft: number): Promise<void> {
+  async sendAdminEmail(
+    data: VCardFormData,
+    plan: { name: string; price: number; period: string },
+    repoUrl: string,
+    deployUrl: string,
+    orderId: string,
+    paymentIntentId: string
+  ): Promise<void> {
     const templateParams = {
-      to_name: name,
-      to_email: email,
-      days_left: daysLeft,
-      trial_end_date: new Date(Date.now() + daysLeft * 24 * 60 * 60 * 1000).toLocaleDateString('hu-HU')
+      to_name: 'Admin',
+      to_email: 'kokornika@gmail.com',
+      customer_name: data.name,
+      customer_email: data.email,
+      customer_phone: data.phoneMobile,
+      customer_company: data.company || 'Nincs megadva',
+      customer_position: data.position || 'Nincs megadva',
+      plan_name: plan.name,
+      plan_price: `${plan.price.toLocaleString()} Ft`,
+      plan_period: plan.period,
+      order_id: orderId,
+      payment_intent_id: paymentIntentId,
+      repo_url: repoUrl,
+      deploy_url: deployUrl,
+      order_summary: generateOrderSummary(data)
     };
 
-    await this.sendEmail('template_trial_ending', templateParams);
-  }
-
-  async sendTrialConversionEmail(email: string, name: string): Promise<void> {
-    const templateParams = {
-      to_name: name,
-      to_email: email
-    };
-
-    await this.sendEmail('template_trial_conversion', templateParams);
+    await this.sendEmail('template_digital_card_or', templateParams);
   }
 }
-
-// Export a singleton instance
-export const emailService = new EmailService();

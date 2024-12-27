@@ -52,28 +52,31 @@ const VCardSocialLinks: React.FC<VCardSocialLinksProps> = ({ formData, onChange 
       
       <div className="space-y-4">
         {formData.socialLinks.map((link, index) => (
-          <div key={index} className="flex flex-col sm:flex-row gap-2 sm:gap-4">
-            <select
-              value={link.platform}
-              onChange={(e) => updateSocialLink(index, 'platform', e.target.value)}
-              className="p-2 border border-gray-300 rounded-lg text-sm bg-white"
-            >
-              {socialPlatforms.map((platform) => (
-                <option key={platform} value={platform}>
-                  {platform}
-                </option>
-              ))}
-            </select>
-            <input
-              type="url"
-              value={link.url}
-              onChange={(e) => updateSocialLink(index, 'url', e.target.value)}
-              placeholder="https://"
-              className="p-2 border border-gray-300 rounded-lg text-sm"
-            />
+          <div key={index} className="flex flex-col sm:flex-row gap-2">
+            <div className="flex-1 min-w-0 flex flex-col sm:flex-row gap-2">
+              <select
+                value={link.platform}
+                onChange={(e) => updateSocialLink(index, 'platform', e.target.value)}
+                className="p-2 border border-gray-300 rounded-lg text-sm bg-white w-full sm:w-auto"
+              >
+                {socialPlatforms.map((platform) => (
+                  <option key={platform} value={platform}>
+                    {platform}
+                  </option>
+                ))}
+              </select>
+              <input
+                type="url"
+                value={link.url}
+                onChange={(e) => updateSocialLink(index, 'url', e.target.value)}
+                placeholder="https://"
+                className="p-2 border border-gray-300 rounded-lg text-sm flex-1 min-w-0 w-full"
+              />
+            </div>
             <button
               onClick={() => removeSocialLink(index)}
-              className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors self-end"
+              className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors self-start sm:self-auto"
+              aria-label="Törlés"
             >
               <Trash2 className="w-5 h-5" />
             </button>

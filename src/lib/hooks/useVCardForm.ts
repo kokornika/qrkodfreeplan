@@ -41,7 +41,8 @@ export const useVCardForm = () => {
   const handleChange = (field: keyof VCardFormData, value: any) => {
     let processedValue = value;
 
-    if (!hasInteracted && value.trim() !== '') {
+    // Only try to trim string values
+    if (!hasInteracted && typeof value === 'string' && value.trim() !== '') {
       setHasInteracted(true);
       showTemporaryPreview();
     }
@@ -60,7 +61,10 @@ export const useVCardForm = () => {
       [field]: true
     }));
 
-    if (!hasStartedEditing && processedValue) {
+    if (!hasStartedEditing && (
+      (typeof processedValue === 'string' && processedValue.trim()) || 
+      (Array.isArray(processedValue) && processedValue.length > 0)
+    )) {
       setHasStartedEditing(true);
     }
   };

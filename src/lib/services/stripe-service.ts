@@ -6,31 +6,6 @@ class StripeService {
   private publishableKey: string;
   private stripePromise: Promise<any>;
 
-  async createCustomer(email: string, name: string): Promise<string> {
-    try {
-      const response = await fetch('/.netlify/functions/create-customer', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email,
-          name,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to create Stripe customer');
-      }
-
-      const data = await response.json();
-      return data.customerId;
-    } catch (error) {
-      console.error('Error creating Stripe customer:', error);
-      throw error;
-    }
-  }
-
   constructor() {
     this.publishableKey = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || '';
     this.stripePromise = this.initializeStripe();

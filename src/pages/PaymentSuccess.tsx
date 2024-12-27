@@ -1,8 +1,7 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { CheckCircle2, ArrowLeft, Loader2 } from 'lucide-react';
 import { orderService } from '../lib/services/order-service';
-import { TrialService } from '../lib/services/trial-service';
 
 const PaymentSuccess: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -11,47 +10,27 @@ const PaymentSuccess: React.FC = () => {
   
   const sessionId = searchParams.get('session_id');
   const orderId = searchParams.get('order_id');
-  const isTrial = searchParams.get('trial') === 'true';
 
-  const processOrder = useCallback(async () => {
-    if (isTrial) {
-      const orderData = sessionStorage.getItem('orderData');
-      if (!orderData) {
-        setError('Hiányzó megrendelési adatok');
+  useEffect(() => {
+    const processOrder = async () => {
+      if (!sessionId || !orderId) {
+        setError('Érvénytelen munkamenet azonosító');
         setIsLoading(false);
         return;
       }
 
-      const { formData } = JSON.parse(orderData);
       try {
-        await TrialService.startTrial(formData.email, formData.name);
-        sessionStorage.removeItem('orderData');
-      } catch (err) {
-        setError('Hiba történt a próbaidőszak aktiválása során');
-        console.error('Trial activation error:', err);
+        await orderService.completeOrder(sessionId, orderId);
+      } catch (error) {
+        console.error('Order processing error:', error);
+        setError(error instanceof Error ? error.message : 'Hiba történt a megrendelés feldolgozása során');
+      } finally {
+        setIsLoading(false);
       }
-      setIsLoading(false);
-      return;
-    }
+    };
 
-    if (!sessionId || !orderId) {
-      setError('Érvénytelen munkamenet azonosító');
-      setIsLoading(false);
-      return;
-    }
-
-    try {
-      await orderService.completeOrder(sessionId, orderId);
-    } catch (error) {
-      console.error('Order processing error:', error);
-      setError(error instanceof Error ? error.message : 'Hiba történt a megrendelés feldolgozása során');
-    } finally {
-      setIsLoading(false);
-    }
-  }, [sessionId, orderId, isTrial]);
-  useEffect(() => {
     processOrder();
-  }, [processOrder]);
+  }, [sessionId, orderId]);
 
   return (
     <div className="max-w-2xl mx-auto pt-8 sm:pt-16">
@@ -96,11 +75,12 @@ const PaymentSuccess: React.FC = () => {
             <div className="space-y-4 text-center">
               <p className="text-lg text-gray-700">
                 Köszönjük a megrendelést! <br />
-                {isTrial ? 'A próbaidőszak aktiválva! Emailben elküldtük a további tudnivalókat.' : 'A megrendelés részleteiről emailt küldtünk a megadott email címre.'}
+  A megrendelés részleteiről emailt küldtünk a megadott email címre.
               </p>
               <div className="bg-blue-50 p-4 rounded-lg">
                 <p className="text-gray-700">
-                  {isTrial ? 'A digitális névjegykártyád azonnal használatra kész!' : 'Kollégáink 24 órán belül elkészítik és emailben elküldik a digitális névjegykártyád weboldalát.'}
+                  Kollégáink <span className="font-semibold">24 órán belül</span> elkészítik és emailben elküldik 
+                  a digitális névjegykártyád weboldalát.
                 </p>
               </div>
               <div className="bg-gray-50 p-4 rounded-lg">

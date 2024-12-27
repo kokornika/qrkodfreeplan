@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, CreditCard, BookOpen, Info } from 'lucide-react';
+import { Menu, X, CreditCard, Info } from 'lucide-react';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -10,7 +10,6 @@ const Header = () => {
   const navigation = [
     { name: 'Főoldal', href: '/', icon: CreditCard },
     { name: 'Névjegykártya Készítés', href: '/vcard', icon: Info },
-    { name: 'Blog', href: '/blog', icon: BookOpen },
   ];
 
   const isActive = (path: string) => {
