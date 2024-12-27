@@ -7,11 +7,10 @@ import StarRating from '../ui/StarRating';
 const HeroSection = () => {
   return (
     <section className="relative min-h-[90vh] flex items-center pt-0 lg:pt-16 pb-8 overflow-hidden bg-gradient-to-br from-indigo-900 via-blue-900 to-purple-900">
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <div className="grid grid-cols-1 md:grid-cols-5 lg:grid-cols-2 gap-8 items-center">
+      <div className="relative z-10 max-w-7xl mx-auto px-0 sm:px-6 lg:px-8 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-5 lg:grid-cols-2 gap-0 md:gap-8 items-center">
           {/* Hero Image */}
-          <div className="relative flex justify-center md:col-span-3 lg:col-span-1 lg:justify-end lg:order-2 lg:-mr-16 xl:-mr-32 mt-1
-            md:mt-0">
+          <div className="relative flex justify-center md:col-span-3 lg:col-span-1 lg:justify-end lg:order-2 lg:-mr-16 xl:-mr-32  -mb-12 md:my-0">
             {/* Background effects container */}
             <div className="lg:hidden absolute inset-0 rounded-[40px] bg-gradient-to-b from-white/10 to-transparent backdrop-blur-[2px] -z-10" />
             
@@ -35,13 +34,15 @@ const HeroSection = () => {
                     scale-100 
                     md:scale-125 
                     lg:scale-150 
-                    max-h-[40vh] 
+                    max-h-[35vh] 
                     md:max-h-[60vh] 
                     lg:max-h-none 
                     transform 
                     translate-y-0 
                     md:translate-y-0 
-                    lg:translate-y-0"
+                    lg:translate-y-0
+                    -ml-4
+                    md:ml-0"
                 />
               </picture>
               
@@ -51,7 +52,7 @@ const HeroSection = () => {
           </div>
 
           {/* Text Content */}
-          <div className="text-left space-y-4 lg:space-y-6 md:col-span-2 lg:col-span-1 lg:pr-8 lg:order-1 relative z-20 -mt-8 md:mt-0">
+          <div className="text-left space-y-4 lg:space-y-6 md:col-span-2 lg:col-span-1 lg:pr-8 lg:order-1 relative z-20 -mt-8 md:mt-0 px-4 md:px-0">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
               Digitális Névjegykártya 
               <span className="bg-gradient-to-r from-blue-400 to-purple-400 text-transparent bg-clip-text block mt-2">
